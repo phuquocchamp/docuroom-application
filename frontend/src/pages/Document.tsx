@@ -1,10 +1,8 @@
-import Sidebar from '../components/Sidebar'
+
 
 function Document() {
   return (
-    <div>
-      <Sidebar/>
-    </div>
+    <div>Document</div>
   )
 }
 

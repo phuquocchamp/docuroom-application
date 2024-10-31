@@ -1,11 +1,8 @@
-import Sidebar from '../components/Sidebar'
 
-function Dashboard() {
+function Home() {
   return (
-    <div>
-        <Sidebar />         
-    </div>
+    <div>Home</div>
   )
 }
 
-export default Dashboard
+export default Home
