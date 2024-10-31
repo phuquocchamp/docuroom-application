@@ -1,8 +1,8 @@
 import { IoDocumentTextOutline, IoSettingsOutline } from "react-icons/io5";
-import { HiOutlineHome } from "react-icons/hi";
-import { HiUserGroup } from "react-icons/hi2";
-import { RiAccountBoxLine } from "react-icons/ri";
+import { HiOutlineUserGroup } from "react-icons/hi2";
 import { FiHelpCircle } from "react-icons/fi";
+import { IoHomeOutline } from "react-icons/io5";
+import { VscAccount } from "react-icons/vsc";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
@@ -14,10 +14,10 @@ function Sidebar() {
   };
 
   const SIDEBAR_LINKS = [
-    { id: 1, path: "/", name: "Home", icon: <HiOutlineHome /> },
+    { id: 1, path: "/", name: "Home", icon: <IoHomeOutline /> },
     { id: 2, path: "/document", name: "Document", icon: <IoDocumentTextOutline /> },
-    { id: 3, path: "/studygroup", name: "StudyGroup", icon: <HiUserGroup /> },
-    { id: 4, path: "/myaccount", name: "Account", icon: <RiAccountBoxLine /> },
+    { id: 3, path: "/studygroup", name: "StudyGroup", icon: <HiOutlineUserGroup /> },
+    { id: 4, path: "/myaccount", name: "Account", icon: <VscAccount /> },
     { id: 5, path: "/setting", name: "Setting", icon: <IoSettingsOutline /> },
     { id: 6, path: "/help", name: "Help", icon: <FiHelpCircle /> },
   ];
@@ -25,9 +25,9 @@ function Sidebar() {
   return (
     <div className="w-16 md:w-56 fixed left-0 top-0 z-10 h-screen border-r pt-8 px-4 bg-white">
       {/*logo*/}
-      <div className="mb-8">
-        <img src="/logodocuroom.png" alt="logo" className="w-28 hidden md:flex" />
-        <img src="/minilogo.png" alt="minilogo" className="w-8 flex md:hidden" />
+      <div className="mb-8 items-center pl-2">
+        <img src="/logodocuroom.png" alt="logo" className="w-[150px] hidden md:flex" />
+        <img src="/minilogo.png" alt="minilogo" className="w-12 flex md:hidden" />
       </div>
       {/*logo*/}
 
@@ -54,12 +54,15 @@ function Sidebar() {
       </ul>
       {/* Navigation Links */}
 
-      <div className="w-full absolute bottom-5 left-0 px-4 py-2 cursor-pointer text-center">
-        <p className="flex items-center space-x-2 text-xs text-white py-2 px-5 bg-gradient-to-r from-blue-400 to-indigo-600 rounded-full">
-          {" "}
-          <span>?</span> <span>Need Help</span>
-        </p>
-      </div>
+      <div className="w-11/12 mx-auto absolute bottom-10 left-1/2 transform -translate-x-1/2 px-4 py-4 cursor-pointer text-center bg-gradient-to-r from-pink-300 to-blue-500 rounded-lg shadow-lg">
+  <p className="text-white text-xs font-normal mb-3">
+    Upgrade to PRO to get access all Features!
+  </p>
+  <button className="bg-white text-blue-500 text-sm font-semibold py-1.5 px-5 rounded-full shadow-md hover:bg-gray-100 transition-all duration-300">
+    Get Pro Now!
+  </button>
+</div>
+
     </div>
   );
 }
