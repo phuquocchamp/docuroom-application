@@ -10,8 +10,8 @@ export default {
         sans: ['Poppins', 'sans-serif'],
       },
       colors: {
-        'fresh-blue': '#3572EF',
-        'light-purpe': '#9197B3',
+        'primary-blue': '#3572EF',
+        'purpe': '#9197B3',
       },
     },
   },
