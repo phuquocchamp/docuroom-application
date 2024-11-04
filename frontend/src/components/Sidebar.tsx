@@ -14,12 +14,12 @@ function Sidebar() {
   };
 
   const SIDEBAR_LINKS = [
-    { id: 1, path: "/", name: "Home", icon: <IoHomeOutline /> },
-    { id: 2, path: "/document", name: "Document", icon: <IoDocumentTextOutline /> },
-    { id: 3, path: "/studygroup", name: "StudyGroup", icon: <HiOutlineUserGroup /> },
-    { id: 4, path: "/myaccount", name: "Account", icon: <VscAccount /> },
-    { id: 5, path: "/setting", name: "Setting", icon: <IoSettingsOutline /> },
-    { id: 6, path: "/help", name: "Help", icon: <FiHelpCircle /> },
+    { id: 1, path: "/home", name: "Home", icon: <IoHomeOutline /> },
+    { id: 2, path: "/home/document", name: "Document", icon: <IoDocumentTextOutline /> },
+    { id: 3, path: "/home/studygroup", name: "StudyGroup", icon: <HiOutlineUserGroup /> },
+    { id: 4, path: "/home/myaccount", name: "Account", icon: <VscAccount /> },
+    { id: 5, path: "/home/setting", name: "Setting", icon: <IoSettingsOutline /> },
+    { id: 6, path: "/home/help", name: "Help", icon: <FiHelpCircle /> },
   ];
 
   return (
