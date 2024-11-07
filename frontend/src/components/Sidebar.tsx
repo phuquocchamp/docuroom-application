@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 
 function Sidebar() {
-  const [activeLink, setActiveLink] = useState(0); // Đặt giá trị mặc định là id đầu tiên (1)
+  const [activeLink, setActiveLink] = useState(0); // Default active link is the first one
 
   const handleLinkClick = (id) => {
     setActiveLink(id);
@@ -24,12 +24,12 @@ function Sidebar() {
 
   return (
     <div className="w-16 md:w-56 fixed left-0 top-0 z-10 h-screen border-r pt-8 px-4 bg-white">
-      {/*logo*/}
+      {/* Logo */}
       <div className="mb-8 items-center pl-2">
         <img src="/logodocuroom.png" alt="logo" className="w-[150px] hidden md:flex" />
         <img src="/minilogo.png" alt="minilogo" className="w-12 flex md:hidden" />
       </div>
-      {/*logo*/}
+      {/* Logo */}
 
       {/* Navigation Links */}
       <ul className="mt-6 space-y-6">
@@ -54,15 +54,15 @@ function Sidebar() {
       </ul>
       {/* Navigation Links */}
 
-      <div className="w-11/12 mx-auto absolute bottom-10 left-1/2 transform -translate-x-1/2 px-4 py-4 cursor-pointer text-center bg-gradient-to-r from-pink-300 to-blue-500 rounded-lg shadow-lg">
-  <p className="text-white text-xs font-normal mb-3">
-    Upgrade to PRO to get access all Features!
-  </p>
-  <button className="bg-white text-blue-500 text-sm font-semibold py-1.5 px-5 rounded-full shadow-md hover:bg-gray-100 transition-all duration-300">
-    Get Pro Now!
-  </button>
-</div>
-
+      {/* Upgrade to Pro section */}
+      <div className="w-11/12 mx-auto absolute bottom-10 left-1/2 transform -translate-x-1/2 px-4 py-4 cursor-pointer text-center bg-gradient-to-r from-pink-300 to-blue-500 rounded-lg shadow-lg hidden md:block">
+        <p className="text-white text-xs font-normal mb-3">
+          Upgrade to PRO to get access to all Features!
+        </p>
+        <button className="bg-white text-blue-500 text-sm font-semibold py-1.5 px-5 rounded-full shadow-md hover:bg-gray-100 transition-all duration-300">
+          Get Pro Now!
+        </button>
+      </div>
     </div>
   );
 }
