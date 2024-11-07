@@ -1,8 +1,12 @@
 
-
+import Category from "../components/Category"
+import DocumentItems from "../components/DocumentItems"
 function Document() {
   return (
-    <div>Document</div>
+    <div className="p-8">
+      <Category />
+      <DocumentItems />
+    </div>
   )
 }
 

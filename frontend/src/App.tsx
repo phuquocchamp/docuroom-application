@@ -8,6 +8,8 @@ import Help from './pages/Help';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import ForgotPassword from './pages/ForgotPassword';
+import DocDetails from './pages/DocDetails';
+import DocumentDetail from './pages/DocDetails';
 function App() {
   return (
     <BrowserRouter>
@@ -27,6 +29,8 @@ function App() {
           <Route path='setting' element={<Setting />} />
           <Route path='help' element={<Help />} />
         </Route>
+
+        <Route path="/item-details/:id" element={<DocDetails/>} />
 
       </Routes>
     </BrowserRouter>

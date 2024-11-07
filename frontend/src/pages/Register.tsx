@@ -4,9 +4,10 @@ import { RiInstagramFill } from 'react-icons/ri';
 
 function Register() {
   return (
-    <div className="h-screen flex">
+    <div className="h-screen flex flex-col md:flex-row">
+
       {/* Left Side - Image and Text */}
-      <div className="w-1/2 h-full bg-primary-blue relative flex items-center justify-center">
+      <div className="hidden md:block w-1/2 h-full bg-primary-blue relative flex items-center justify-center">
         <div className="absolute pb-24 top-1/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-center">
           <h2 className="text-3xl font-semibold">Share Document and Study Group Platform</h2>
           <p className="text-lg font-light mt-2">Join us and collaborate with others!</p>
@@ -15,15 +16,16 @@ function Register() {
         <div className="w-4/5">
           <img
             src="/login/online-group.png"
-            className="w-full h-auto pt-20"
+            className="w-full h-auto pt-20 ml-20"
+            alt="Registration Illustration"
           />
         </div>
       </div>
 
       {/* Right Side - Register Form */}
-      <div className="w-1/2 h-full flex flex-col justify-center items-center bg-white px-16 relative">
+      <div className="w-full md:w-1/2 h-full flex flex-col justify-center items-center bg-white px-8 md:px-16 relative">
         {/* Logo */}
-        <img src="logodocuroom.png" alt="Logo" className="absolute top-12 left-24 w-40 h-auto" />
+        <img src="logodocuroom.png" alt="Logo" className="absolute top-12 left-12 md:left-24 w-40 h-auto" />
 
         {/* Form Container */}
         <div className="w-full max-w-sm mt-20">
