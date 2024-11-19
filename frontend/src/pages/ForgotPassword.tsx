@@ -24,7 +24,6 @@ function ForgotPassword() {
       <div className="w-full md:w-1/2 h-full flex flex-col justify-center items-center bg-white px-8 md:px-16 relative">
         {/* Logo */}
         <img src="logodocuroom.png" alt="Logo" className="absolute top-12 left-12 md:left-24 w-40 h-auto" />
-
         {/* Form Container */}
         <div className="w-full max-w-sm mt-20">
           <h3 className="text-3xl font-semibold mb-6 text-center">Forgot Password</h3>
