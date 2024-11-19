@@ -9,7 +9,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import ForgotPassword from './pages/ForgotPassword';
 import DocDetails from './pages/DocDetails';
-import DocumentDetail from './pages/DocDetails';
+import AddDocument from './pages/AddDocument';
 function App() {
   return (
     <BrowserRouter>
@@ -24,6 +24,7 @@ function App() {
         <Route path="/home" element={<Layout />}>
           <Route index element={<Home />} />
           <Route path='document' element={<Document />} />
+          <Route path="addDocument" element={<AddDocument />} />
           <Route path='studygroup' element={<StudyGroup />} />
           <Route path='myaccount' element={<Document />} />
           <Route path='setting' element={<Setting />} />
