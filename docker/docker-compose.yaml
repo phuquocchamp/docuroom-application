@@ -1,0 +1,11 @@
+services:
+  backend:
+    container_name: "backend"
+    image: mysql:latest
+    environment:
+      - 'MYSQL_DATABASE=docuroom_db'
+      - 'MYSQL_ROOT_PASSWORD=root'
+      - 'MYSQL_PASSWORD=user@12345'
+      - 'MYSQL_USER=devuser'
+    ports:
+      - "3307:3306"
