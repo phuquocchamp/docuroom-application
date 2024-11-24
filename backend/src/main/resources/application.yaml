@@ -1,0 +1,24 @@
+server:
+  port: 8080
+
+logging:
+  level:
+    org.springframework.security: trace
+
+spring:
+  application:
+    name: "backend"
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  datasource:
+    url: jdbc:mysql://localhost:3307/docuroom_db
+    username: "devuser"
+    password: "user@12345"
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+
+
+
