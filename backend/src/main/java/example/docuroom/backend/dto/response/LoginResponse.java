@@ -13,5 +13,5 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 public class LoginResponse {
-  private String jwtToken;
+  private String token;
 }

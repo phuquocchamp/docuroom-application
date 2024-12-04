@@ -1,8 +1,28 @@
-import { Link } from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import { FaGoogle, FaFacebookF } from 'react-icons/fa';
 import { RiInstagramFill } from 'react-icons/ri';
+import {useState} from "react";
+import {login} from "../services/auth.tsx";
 
 function Login() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError('');
+
+    const credentials = { email, password };
+    const success = await login(credentials);
+
+    if (success) {
+      navigate('/home');
+    } else {
+      setError('Login failed. Please check your email and password.');
+    }
+  };
   return (
     <div className="h-screen flex flex-col md:flex-row">
 
@@ -30,11 +50,15 @@ function Login() {
         {/* Form Container */}
         <div className="w-full max-w-sm mt-20">
           <h3 className="text-3xl font-semibold mb-6 text-center">Login</h3>
-          <form className="space-y-6">
+
+          <form className="space-y-6" onSubmit={handleSubmit}>
+            {error && <p className="text-red-500 text-sm">{error}</p>}
             <div>
               <label className="block text-sm font-medium mb-1">Email</label>
               <input
                 type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 placeholder="Enter your email"
                 className="w-full border rounded-lg p-4 focus:outline-none focus:ring-2 focus:ring-primary-blue text-lg"
               />
@@ -43,6 +67,8 @@ function Login() {
               <label className="block text-sm font-medium mb-1">Password</label>
               <input
                 type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 placeholder="Enter your password"
                 className="w-full border rounded-lg p-4 focus:outline-none focus:ring-2 focus:ring-primary-blue text-lg"
               />
@@ -62,7 +88,7 @@ function Login() {
 
           <p className="text-center text-gray-500 my-4">
             Don't have an account?{' '}
-            <Link to="/signup" className="text-primary-blue hover:underline">
+            <Link to="/register" className="text-primary-blue hover:underline">
               Sign up now
             </Link>
           </p>

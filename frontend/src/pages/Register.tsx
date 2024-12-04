@@ -1,8 +1,30 @@
-import { Link } from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import { FaGoogle, FaFacebookF } from 'react-icons/fa';
 import { RiInstagramFill } from 'react-icons/ri';
+import {register} from "../services/auth.tsx";
+import {useState} from "react";
 
 function Register() {
+  const [fullName, setFullName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [school, setSchool] = useState('');
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError('');
+
+    const credentials = { fullName, email, password, school };
+    const success = await register(credentials);
+
+    if (success) {
+      navigate('/');
+    } else {
+      setError('Registration failed. Please check your details and try again.');
+    }
+  };
   return (
     <div className="h-screen flex flex-col md:flex-row">
 
@@ -30,34 +52,51 @@ function Register() {
         {/* Form Container */}
         <div className="w-full max-w-sm mt-20">
           <h3 className="text-3xl font-semibold mb-6 text-center">Register</h3>
-          <form className="space-y-6">
+          <form className="space-y-6" onSubmit={handleSubmit}>
+            {error && <p className="text-red-500 text-sm">{error}</p>}
             <div>
-              <label className="block text-sm font-medium mb-1">Name</label>
+              <label className="block text-sm font-medium mb-1">Full Name</label>
               <input
-                type="text"
-                placeholder="Enter your name"
-                className="w-full border rounded-lg p-4 focus:outline-none focus:ring-2 focus:ring-primary-blue text-lg"
+                  type="text"
+                  value={fullName}
+                  onChange={(e) => setFullName(e.target.value)}
+                  placeholder="Enter your fullname"
+                  className="w-full border rounded-lg p-4 focus:outline-none focus:ring-2 focus:ring-primary-blue text-lg"
               />
             </div>
             <div>
               <label className="block text-sm font-medium mb-1">Email</label>
               <input
-                type="email"
-                placeholder="Enter your email"
-                className="w-full border rounded-lg p-4 focus:outline-none focus:ring-2 focus:ring-primary-blue text-lg"
+                  type="email"
+                  value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Enter your email"
+                  className="w-full border rounded-lg p-4 focus:outline-none focus:ring-2 focus:ring-primary-blue text-lg"
               />
             </div>
             <div>
               <label className="block text-sm font-medium mb-1">Password</label>
               <input
-                type="password"
-                placeholder="Enter your password"
-                className="w-full border rounded-lg p-4 focus:outline-none focus:ring-2 focus:ring-primary-blue text-lg"
+                  type="password"
+                  value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Enter your password"
+                  className="w-full border rounded-lg p-4 focus:outline-none focus:ring-2 focus:ring-primary-blue text-lg"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-1">School</label>
+              <input
+                  type="school"
+                  value={school}
+                  onChange={(e) => setSchool(e.target.value)}
+                  placeholder="Enter your school"
+                  className="w-full border rounded-lg p-4 focus:outline-none focus:ring-2 focus:ring-primary-blue text-lg"
               />
             </div>
             <button
-              type="submit"
-              className="w-full bg-blue-500 text-white py-3 rounded-lg font-semibold hover:bg-primary-blue transition duration-300 text-lg"
+                type="submit"
+                className="w-full bg-blue-500 text-white py-3 rounded-lg font-semibold hover:bg-primary-blue transition duration-300 text-lg"
             >
               Register
             </button>

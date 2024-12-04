@@ -1,41 +1,42 @@
-import React from 'react'
-import { useState } from 'react';
-import { BsThreeDotsVertical } from 'react-icons/bs';
-import { VscNewFolder } from "react-icons/vsc";
-import { IoCloseCircleOutline } from 'react-icons/io5';
+import {useState} from 'react';
+import {BsThreeDotsVertical} from 'react-icons/bs';
+import {VscNewFolder} from 'react-icons/vsc';
+import {IoCloseCircleOutline} from 'react-icons/io5';
 
-function MyFolder() {
-    const [activePopup, setActivePopup] = useState(null);
+function MyFolder(): JSX.Element {
+    const [activePopup, setActivePopup] = useState<number | null>(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const categories = ["Korean", "Computer Network", "Software Technology", "English"];
+    const categories = [
+        'Korean',
+        'Computer Network',
+        'Software Technology',
+        'English',
+    ];
 
-    const handlePopupToggle = (index) => {
+    const handlePopupToggle = (index: number): void => {
         setActivePopup((prev) => (prev === index ? null : index));
     };
 
-    const handleRename = (category) => {
+    const handleRename = (category: string): void => {
         console.log(`Rename ${category}`);
         setActivePopup(null);
     };
 
-    const handleDelete = (category) => {
+    const handleDelete = (category: string): void => {
         console.log(`Delete ${category}`);
         setActivePopup(null);
     };
 
-    const [isModalOpen, setIsModalOpen] = useState(false);  // state để điều khiển modal
+    const openModal = (): void => setIsModalOpen(true);
 
-    // Mở modal
-    const openModal = () => setIsModalOpen(true);
+    const closeModal = (): void => setIsModalOpen(false);
 
-    // Đóng modal
-    const closeModal = () => setIsModalOpen(false);
     return (
         <div>
             <div className="flex items-center justify-between p-4">
                 <h2 className="font-semibold text-lg">My Folder</h2>
                 <div>
-                    {/* Button tạo folder */}
                     <button
                         onClick={openModal}
                         className="flex items-center gap-2 px-4 py-2 bg-blue-500 shadow-md text-white font-medium rounded-full hover:bg-blue-600 transition"
@@ -44,27 +45,27 @@ function MyFolder() {
                         Create New Folder
                     </button>
 
-                    {/* Modal */}
                     {isModalOpen && (
                         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
                             <div className="bg-white p-6 rounded-lg shadow-lg w-1/3 relative">
-                                {/* Icon đóng modal */}
                                 <IoCloseCircleOutline
                                     onClick={closeModal}
                                     className="absolute top-2 right-2 text-2xl text-gray-600 cursor-pointer"
                                 />
 
-                                <h2 className=" mb-4 text-xl font-semibold text-blue-600">Create a New Folder</h2>
-                                {/* Input tên folder */}
+                                <h2 className="mb-4 text-xl font-semibold text-blue-600">
+                                    Create a New Folder
+                                </h2>
                                 <input
                                     type="text"
                                     placeholder="Enter folder name"
                                     className="w-full mb-4 p-2 border rounded"
                                 />
 
-                                {/* Danh sách document */}
                                 <div className="mb-4">
-                                    <label className="block mb-2  font-semibold ">Select Document(s):</label>
+                                    <label className="block mb-2 font-semibold">
+                                        Select Document(s):
+                                    </label>
                                     <select className="w-full p-2 border rounded">
                                         <option>Select a document</option>
                                         <option>Document 1</option>
@@ -73,7 +74,6 @@ function MyFolder() {
                                     </select>
                                 </div>
 
-                                {/* Button tạo mới */}
                                 <button
                                     onClick={closeModal}
                                     className="flex items-center gap-2 px-4 py-2 bg-blue-500 shadow-md text-white font-medium rounded-full hover:bg-blue-600 transition"
@@ -102,7 +102,6 @@ function MyFolder() {
                             <BsThreeDotsVertical className="w-5 h-5" />
                         </button>
 
-                        {/* Popup */}
                         {activePopup === index && (
                             <div className="absolute right-0 top-14 bg-white border rounded-lg shadow-lg z-10 w-40">
                                 <button
@@ -123,7 +122,7 @@ function MyFolder() {
                 ))}
             </div>
         </div>
-    )
+    );
 }
 
-export default MyFolder
+export default MyFolder;

@@ -49,7 +49,7 @@ public class AuthController {
         ApiResponse<RegisterResponse> response = new ApiResponse<>();
         response.setStatus(HttpStatus.CREATED.value());
         response.setMessage("USER REGISTERED SUCCESSFULLY");
-        response.setResponse(authServiceImpl.registerUser(registerRequest));
+        response.setData(authServiceImpl.registerUser(registerRequest));
 
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
@@ -88,7 +88,7 @@ public class AuthController {
         ApiResponse<LoginResponse> response = new ApiResponse<>();
         response.setStatus(HttpStatus.OK.value());
         response.setMessage("USER LOGGED IN SUCCESSFULLY");
-        response.setResponse(new LoginResponse(jwt));
+        response.setData(new LoginResponse(jwt));
 
         return ResponseEntity
                 .status(HttpStatus.OK.value())
