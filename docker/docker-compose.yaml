@@ -1,6 +1,6 @@
 services:
-  backend:
-    container_name: "backend"
+  database:
+    container_name: "database"
     image: mysql:latest
     environment:
       - 'MYSQL_DATABASE=docuroom_db'
@@ -8,4 +8,16 @@ services:
       - 'MYSQL_PASSWORD=user@12345'
       - 'MYSQL_USER=devuser'
     ports:
-      - "3307:3306"
+      - "3306:3306"
+
+  backend:
+    container_name: "backend"
+    build: ../backend
+    ports:
+      - "8080:8080"
+    depends_on:
+      - database
+    environment:
+      - MYSQL_DATABASE_URL=jdbc:mysql://database:3306/docuroom_db?useSSL=false&allowPublicKeyRetrieval=true
+      - MYSQL_DATABASE_USERNAME=devuser
+      - MYSQL_DATABASE_PASSWORD=user@12345
