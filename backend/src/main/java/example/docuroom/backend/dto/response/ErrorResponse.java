@@ -1,4 +1,4 @@
-package example.docuroom.backend.dto;
+package example.docuroom.backend.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ErrorResponseDTO {
+public class ErrorResponse {
     private String apiPath;
     private HttpStatus errorCode;
     private String errorMessage;

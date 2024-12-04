@@ -1,4 +1,4 @@
-package example.docuroom.backend.dto;
+package example.docuroom.backend.dto.request;
 
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
@@ -7,10 +7,10 @@ import lombok.Setter;
 
 @Setter @Getter
 @AllArgsConstructor
-public class LoginDTO {
+public class LoginRequest {
 
-    @NotEmpty(message = "USERNAME MUST NOT BE NULL OR EMPTY")
-    private String username;
+    @NotEmpty(message = "EMAIL MUST NOT BE NULL OR EMPTY")
+    private String email;
 
     @NotEmpty(message = "PASSWORD MUST NOT BE NULL OR EMPTY")
     private String password;
