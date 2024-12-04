@@ -1,11 +1,10 @@
 package example.docuroom.backend.exception;
 
-import example.docuroom.backend.dto.ErrorResponseDTO;
+import example.docuroom.backend.dto.response.ErrorResponse;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -43,72 +42,72 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ErrorResponseDTO> handleGlobalException(
+    public ResponseEntity<ErrorResponse> handleGlobalException(
             Exception exception,
             WebRequest webRequest
     ){
-        ErrorResponseDTO errorResponseDTO = new ErrorResponseDTO(
+        ErrorResponse errorResponse = new ErrorResponse(
                 webRequest.getDescription(false),
                 HttpStatus.INTERNAL_SERVER_ERROR,
                 exception.getMessage(),
                 LocalDateTime.now()
         );
-        return new ResponseEntity<>(errorResponseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<ErrorResponseDTO> handleResourceNotFoundException(
+    public ResponseEntity<ErrorResponse> handleResourceNotFoundException(
             ResourceNotFoundException resourceNotFoundException,
             WebRequest webRequest
     ){
-        ErrorResponseDTO errorResponseDTO = new ErrorResponseDTO(
+        ErrorResponse errorResponse = new ErrorResponse(
                 webRequest.getDescription(false),
                 HttpStatus.NOT_FOUND,
                 resourceNotFoundException.getMessage(),
                 LocalDateTime.now()
         );
-        return new ResponseEntity<>(errorResponseDTO, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(TagAlreadyExitsException.class)
-    public ResponseEntity<ErrorResponseDTO> handleTagAlreadyExitsException(
+    public ResponseEntity<ErrorResponse> handleTagAlreadyExitsException(
            TagAlreadyExitsException tagAlreadyExitsException,
             WebRequest webRequest
     ){
-        ErrorResponseDTO errorResponseDTO = new ErrorResponseDTO(
+        ErrorResponse errorResponse = new ErrorResponse(
                 webRequest.getDescription(false),
                 HttpStatus.NOT_FOUND,
                 tagAlreadyExitsException.getMessage(),
                 LocalDateTime.now()
         );
-        return new ResponseEntity<>(errorResponseDTO, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(UsernameNotFoundException.class)
-    public ResponseEntity<ErrorResponseDTO> handleUsernameNotFoundException(
-            UsernameNotFoundException usernameNotFoundException,
-            WebRequest webRequest
-    ){
-        ErrorResponseDTO errorResponseDTO = new ErrorResponseDTO(
-                webRequest.getDescription(false),
-                HttpStatus.NOT_FOUND,
-                usernameNotFoundException.getMessage(),
-                LocalDateTime.now()
-        );
-        return new ResponseEntity<>(errorResponseDTO, HttpStatus.BAD_REQUEST);
-    }
+//    @ExceptionHandler(UsernameNotFoundException.class)
+//    public ResponseEntity<ErrorResponseDTO> handleUsernameNotFoundException(
+//            UsernameNotFoundException usernameNotFoundException,
+//            WebRequest webRequest
+//    ){
+//        ErrorResponseDTO errorResponseDTO = new ErrorResponseDTO(
+//                webRequest.getDescription(false),
+//                HttpStatus.NOT_FOUND,
+//                usernameNotFoundException.getMessage(),
+//                LocalDateTime.now()
+//        );
+//        return new ResponseEntity<>(errorResponseDTO, HttpStatus.BAD_REQUEST);
+//    }
 
-    @ExceptionHandler(UsernameAlreadyExitsException.class)
-    public ResponseEntity<ErrorResponseDTO> handleUsernameAlreadyExitsException(
-            UsernameAlreadyExitsException usernameAlreadyExitsException,
+    @ExceptionHandler(EmailAlreadyExitsException.class)
+    public ResponseEntity<ErrorResponse> handleEmailAlreadyExitsException(
+            EmailAlreadyExitsException emailAlreadyExitsException,
             WebRequest webRequest
     ){
-        ErrorResponseDTO errorResponseDTO = new ErrorResponseDTO(
+        ErrorResponse errorResponse = new ErrorResponse(
                 webRequest.getDescription(false),
                 HttpStatus.NOT_FOUND,
-                usernameAlreadyExitsException.getMessage(),
+                emailAlreadyExitsException.getMessage(),
                 LocalDateTime.now()
         );
-        return new ResponseEntity<>(errorResponseDTO, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 }

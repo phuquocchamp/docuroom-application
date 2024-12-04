@@ -1,6 +1,8 @@
 package example.docuroom.backend.controller;
 
+import example.docuroom.backend.dto.DocumentDto;
 import example.docuroom.backend.dto.TagDTO;
+import example.docuroom.backend.dto.response.ApiResponse;
 import example.docuroom.backend.service.impl.TagServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -8,6 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/v1/api/tag")
@@ -26,7 +30,13 @@ public class TagController {
     }
 
     @PostMapping
-    public ResponseEntity<TagDTO> createTag(TagDTO tagDTO){
-        return new ResponseEntity<>(tagService.createTag(tagDTO), HttpStatus.CREATED);
+    public ResponseEntity<ApiResponse<String>> createTag(TagDTO tagDTO){
+        return null;
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<ApiResponse<List<DocumentDto>>> getDocumentsByTag(){
+
+        return null;
     }
 }

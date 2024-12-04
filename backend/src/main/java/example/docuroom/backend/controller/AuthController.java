@@ -1,70 +1,99 @@
 package example.docuroom.backend.controller;
 
-
-import example.docuroom.backend.dto.LoginDTO;
-import example.docuroom.backend.dto.RegisterDTO;
-import example.docuroom.backend.dto.ResponseDTO;
-import example.docuroom.backend.entity.Role;
-import example.docuroom.backend.entity.UserAuth;
-import example.docuroom.backend.exception.UsernameAlreadyExitsException;
-import example.docuroom.backend.repository.RoleRepository;
-import example.docuroom.backend.repository.UserRepository;
+import example.docuroom.backend.constant.EnvConstant;
+import example.docuroom.backend.dto.request.LoginRequest;
+import example.docuroom.backend.dto.request.RegisterRequest;
+import example.docuroom.backend.dto.response.ApiResponse;
+import example.docuroom.backend.dto.response.LoginResponse;
+import example.docuroom.backend.dto.response.RegisterResponse;
+import example.docuroom.backend.service.impl.AuthServiceImpl;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.security.Keys;
 import jakarta.validation.Valid;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Collections;
+import javax.crypto.SecretKey;
+import java.nio.charset.StandardCharsets;
+import java.util.Date;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/v1/api/auth")
 public class AuthController {
-
-    private final AuthenticationManager authenticationManager;
-    private final UserRepository userRepository;
-    private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
+    private final AuthServiceImpl authServiceImpl;
+    private final AuthenticationManager authenticationManager;
+    private final Environment environment;
 
-    public AuthController(AuthenticationManager authenticationManager, UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
-        this.authenticationManager = authenticationManager;
-        this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
+    public AuthController(PasswordEncoder passwordEncoder, AuthServiceImpl authServiceImpl, AuthenticationManager authenticationManager, Environment environment) {
         this.passwordEncoder = passwordEncoder;
+        this.authServiceImpl = authServiceImpl;
+        this.authenticationManager = authenticationManager;
+        this.environment = environment;
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody @Valid RegisterDTO registerDTO){
-        if(userRepository.existsByUsername(registerDTO.getUsername())){
-            throw new UsernameAlreadyExitsException("USERNAME ALREADY EXITS");
-        }
-        UserAuth userAuth = new UserAuth();
-        userAuth.setUsername(registerDTO.getUsername());
-        userAuth.setPassword(passwordEncoder.encode(registerDTO.getPassword()));
-        userAuth.setSchool(registerDTO.getSchool());
+    public ResponseEntity<ApiResponse<RegisterResponse>> registerUser(@RequestBody @Valid RegisterRequest registerRequest){
 
-        Role role = roleRepository.findByName("USER").get();
-        userAuth.setRoles(Collections.singletonList(role));
+        ApiResponse<RegisterResponse> response = new ApiResponse<>();
+        response.setStatus(HttpStatus.CREATED.value());
+        response.setMessage("USER REGISTERED SUCCESSFULLY");
+        response.setResponse(authServiceImpl.registerUser(registerRequest));
 
-        userRepository.save(userAuth);
-        return new ResponseEntity<>("USER REGISTERED SUCCESS", HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody @Valid LoginDTO loginDTO){
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginDTO.getUsername(), loginDTO.getPassword())
-        );
+    public ResponseEntity<ApiResponse<LoginResponse>> loginUser(@RequestBody @Valid LoginRequest loginRequest){
+        String jwt = "";
+        Authentication authentication = UsernamePasswordAuthenticationToken.unauthenticated(loginRequest.getEmail(), loginRequest.getPassword());
 
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+        Authentication authenticationResponse = authenticationManager.authenticate(authentication);
 
-        return new ResponseEntity<>("USER LOGIN SUCCESSFUL", HttpStatus.OK);
+        if(authenticationResponse != null && authenticationResponse.isAuthenticated()){
+
+            String secret = environment.getProperty(EnvConstant.JWT_SECRET_KEY, EnvConstant.JWT_SECRET_DEFAULT_VALUE);
+            SecretKey secretKey = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
+
+            jwt = Jwts.builder()
+                .issuer("Docuroom").subject("JWT Token")
+                .claim("username", authenticationResponse.getName())
+
+                .claim("roles", authenticationResponse.getAuthorities().stream()
+                        .filter(a -> a.getAuthority().startsWith("ROLE_"))
+                        .map(GrantedAuthority::getAuthority)
+                        .collect(Collectors.joining(",")))
+
+                .claim("authorities", authenticationResponse.getAuthorities().stream()
+                        .filter(a -> !a.getAuthority().startsWith("ROLE_"))
+                        .map(GrantedAuthority::getAuthority)
+                        .collect(Collectors.joining(",")))
+                .issuedAt(new Date())
+                .expiration(new Date(new Date().getTime() + 30000000))
+                .signWith(secretKey).compact();
+        }
+
+
+        ApiResponse<LoginResponse> response = new ApiResponse<>();
+        response.setStatus(HttpStatus.OK.value());
+        response.setMessage("USER LOGGED IN SUCCESSFULLY");
+        response.setResponse(new LoginResponse(jwt));
+
+        return ResponseEntity
+                .status(HttpStatus.OK.value())
+                .header(EnvConstant.JWT_HEADER, jwt)
+                .body(response);
+
     }
 }
